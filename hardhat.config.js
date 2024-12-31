@@ -1,11 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
+require("dotenv").config();
 
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
-
-/**
- * @type import('hardhat/config').HardhatUserConfig
- */
 module.exports = {
   defaultNetwork: "hardhat",
   networks: {
@@ -19,6 +14,12 @@ module.exports = {
       accounts: {
         mnemonic: "swap swap swap swap swap swap swap swap swap swap swap swap"
       },
+      forking: process.env.ALCHE_API
+        ? {
+            url: process.env.ALCHE_API,
+            blockNumber: 12489619, // Optional: set block number here if required globally
+          }
+        : undefined, // Ensure fallback to avoid undefined errors
     },
   },
   solidity: {
@@ -26,11 +27,11 @@ module.exports = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200
-      }
-    }
+        runs: 200,
+      },
+    },
   },
   mocha: {
-    timeout: 600000
+    timeout: 600000,
   },
 };
